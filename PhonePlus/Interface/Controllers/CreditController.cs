@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhonePlus.Application.Ports.Credits;
 using PhonePlus.Application.Ports.Notifications;
 using PhonePlus.Interface.DTO.Credits;
+using PhonePlus.Interface.Filter;
 
 namespace PhonePlus.Interface.Controllers;
 
@@ -16,6 +17,7 @@ public class CreditController(IMediator mediator) : ControllerBase
 {
     [ProducesResponseType(200)]
     [HttpGet("get-by-user-id")]
+    [RoleAuthorize("Client","Admin")]
     public async Task<IActionResult> GetByUserId([FromQuery] int userId)
     {
         var outputPort = new GetCreditsByUserIdOutputPort();
@@ -27,6 +29,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(200)]
     [HttpGet("get-by-state-id")]
+    [RoleAuthorize("Client","Admin")]
     public async Task<IActionResult> GetByStateId([FromQuery] int stateId)
     {
         var outputPort = new GetCreditsByStateIdOutputPort();
@@ -38,6 +41,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(201)]
     [HttpPost]
+    [RoleAuthorize("Client","Admin")]
     public async Task<IActionResult> CreateCredit([FromBody] CreateCreditRequestDto createCreditDto)
     {
         var outputPort = new CreateOrUpdateCreditOutputPort();
@@ -49,6 +53,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(200)]
     [HttpPatch("update-status")]
+    [RoleAuthorize("Admin")]
     public async Task<IActionResult> UpdateCreditStatus([FromBody] UpdateCreditStateDto updateCreditStatusDto)
     {
         var outputPort = new CreateOrUpdateCreditOutputPort();
