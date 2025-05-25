@@ -1,0 +1,30 @@
+using MediatR;
+using PhonePlus.Application.Ports.Notifications;
+using PhonePlus.Domain.Repositories;
+using PhonePlus.Interface.DTO.Credits;
+
+namespace PhonePlus.Application.UseCases.Credits;
+
+public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository) : IRequestHandler<GetCreditsByUserIdInputPort>
+{
+    public async Task Handle(GetCreditsByUserIdInputPort request, CancellationToken cancellationToken)
+    {
+        var credits = await creditRepository.GetCreditsByUserIdAsync(request.RequestData);
+        var creditResponse = credits.Select(credit => new CreditResponseDto(
+            credit.Id,
+            credit.PhoneNumber,
+            credit.Price,
+            credit.StartDate,
+            credit.Months,
+            credit.InterestRate,
+            credit.Insurance,
+            credit.Amortization,
+            credit.Paid,
+            credit.Interest,
+            credit.PendingPayment,
+            credit.UserId,
+            credit.StateId
+        )).ToList();
+        request.OutputPort.Handle(creditResponse);
+    }
+}
