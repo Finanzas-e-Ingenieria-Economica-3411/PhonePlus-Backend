@@ -43,10 +43,10 @@ public sealed class CreditConfiguration : IEntityTypeConfiguration<Credit>
         builder.Property(c => c.PendingPayment)
             .IsRequired();
 
-        builder.Property(c => c.UserId)
-            .IsRequired();
+        builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
 
-        builder.Property(c => c.StateId)
-            .IsRequired();
+        builder.HasOne<State>()
+            .WithMany()
+            .HasForeignKey(x => x.StateId);
     }
 }
