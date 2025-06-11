@@ -1,7 +1,7 @@
 using PhonePlus.Common.Ports;
 using PhonePlus.Interface.DTO.Notification;
 
-namespace PhonePlus.Application.Ports.Notifications;
+namespace PhonePlus.Application.Ports.Notifications.Output;
 
 public sealed class GetNotificationsByUserIdOutputPort :  IOutputPort<IEnumerable<NotificationResponseDto>>
 {

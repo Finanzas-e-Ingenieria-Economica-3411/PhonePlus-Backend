@@ -1,6 +1,6 @@
 using PhonePlus.Common.Ports;
 
-namespace PhonePlus.Application.Ports.Credits;
+namespace PhonePlus.Application.Ports.Credits.Output;
 
 public sealed class CreateOrUpdateCreditOutputPort : IOutputPort<bool>
 {

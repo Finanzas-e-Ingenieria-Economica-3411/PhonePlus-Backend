@@ -1,7 +1,7 @@
 using PhonePlus.Common.Ports;
 using PhonePlus.Interface.DTO.Credits;
 
-namespace PhonePlus.Application.Ports.Notifications;
+namespace PhonePlus.Application.Ports.Notifications.Output;
 
 public sealed class GetCreditsByStateIdOutputPort : IOutputPort<IEnumerable<CreditResponseDto>>
 {

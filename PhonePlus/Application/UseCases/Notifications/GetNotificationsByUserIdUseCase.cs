@@ -1,5 +1,6 @@
 using MediatR;
 using PhonePlus.Application.Ports.Notifications;
+using PhonePlus.Application.Ports.Notifications.Input;
 using PhonePlus.Domain.Repositories;
 using PhonePlus.Interface.DTO.Notification;
 using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;

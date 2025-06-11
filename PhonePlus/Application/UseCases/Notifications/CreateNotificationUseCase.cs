@@ -1,5 +1,6 @@
 using MediatR;
 using PhonePlus.Application.Ports.Notifications;
+using PhonePlus.Application.Ports.Notifications.Input;
 using PhonePlus.Common.Repository;
 using PhonePlus.Domain.Models;
 using PhonePlus.Domain.Repositories;

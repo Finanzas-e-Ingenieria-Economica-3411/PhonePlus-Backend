@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PhonePlus.Application.Ports.Notifications;
+using PhonePlus.Application.Ports.Notifications.Input;
+using PhonePlus.Application.Ports.Notifications.Output;
 using PhonePlus.Interface.DTO.Notification;
 using PhonePlus.Interface.Filter;
 
