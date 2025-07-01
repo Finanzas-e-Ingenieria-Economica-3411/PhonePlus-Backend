@@ -21,7 +21,7 @@ public class CreditController(IMediator mediator) : ControllerBase
 {
     [ProducesResponseType(200)]
     [HttpGet("get-by-user-id")]
-    [RoleAuthorize("Client","Administrator")]
+    [RoleAuthorize("Seller","Administrator")]
     public async Task<IActionResult> GetByUserId([FromQuery] int userId)
     {
         var outputPort = new GetCreditsByUserIdOutputPort();
@@ -33,7 +33,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(200)]
     [HttpGet("get-by-state-id")]
-    [RoleAuthorize("Client","Administrator")]
+    [RoleAuthorize("Buyer", "Seller","Administrator")]
     public async Task<IActionResult> GetByStateId([FromQuery] int stateId)
     {
         var outputPort = new GetCreditsByStateIdOutputPort();
@@ -45,7 +45,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(201)]
     [HttpPost]
-    [RoleAuthorize("Client","Administrator")]
+    [RoleAuthorize("Seller","Administrator")]
     public async Task<IActionResult> CreateCredit([FromBody] CreateCreditRequestDto createCreditDto)
     {
         var outputPort = new CreateOrUpdateCreditOutputPort();

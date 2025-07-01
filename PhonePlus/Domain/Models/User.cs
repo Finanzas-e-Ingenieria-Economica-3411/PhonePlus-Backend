@@ -22,8 +22,8 @@ public sealed class User
         Name = dto.Name;
         Username = dto.UserName;
         Dni = dto.Dni;
-        RoleId = 2;
         IsEmailVerified = false;
+        RoleId = dto.RoleId;
     }
 
     public User()
@@ -33,8 +33,8 @@ public sealed class User
         Name = string.Empty;
         Username = string.Empty;
         Dni = string.Empty;
-        RoleId = 2;
         IsEmailVerified = false;
+        RoleId = 0;
         
     }
     

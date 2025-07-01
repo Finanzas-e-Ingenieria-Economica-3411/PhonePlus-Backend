@@ -6,8 +6,10 @@ public enum RoleTypes
 {
    [Description("Banned")]
    Banned = 1,
-   [Description("Client")]
-   User = 2,
+   [Description("Buyer")]
+   Buyer = 2,
+   [Description("Seller")]
+   Seller = 3,
    [Description("Administrator")]
-   Admin = 3,
+   Admin = 4,
 }
