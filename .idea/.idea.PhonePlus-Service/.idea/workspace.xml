@@ -10,12 +10,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bb83b272-9545-464e-8ef1-b4bd588099de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PhonePlus-Service/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PhonePlus-Service/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Auth/SignUpUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Auth/SignUpUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Enums/RoleTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/RoleTypes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Domain/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/CreditController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/CreditController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/NotificationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/NotificationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Auth/SignUpDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Auth/SignUpDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.dll" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.AssemblyInfo.cs" afterDir="false" />
@@ -52,6 +46,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/951ae8d4212555ed2042cdaab14de05c17e73221e3f5c17fc22282374a3cd/InvalidOperationException.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -119,15 +114,28 @@
       <workItem from="1748262050670" duration="776000" />
       <workItem from="1749600754654" duration="1953000" />
       <workItem from="1751123065276" duration="2976000" />
-      <workItem from="1751403878891" duration="3163000" />
+      <workItem from="1751403878891" duration="4163000" />
+      <workItem from="1751490337624" duration="1821000" />
     </task>
+    <task id="LOCAL-00001" summary="fix: changed roles authorize">
+      <option name="closed" value="true" />
+      <created>1751410488359</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751410488359</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="fix: changed roles authorize" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: changed roles authorize" />
   </component>
 </project>

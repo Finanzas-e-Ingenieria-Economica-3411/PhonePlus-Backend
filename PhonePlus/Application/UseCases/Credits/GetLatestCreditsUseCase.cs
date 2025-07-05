@@ -6,12 +6,13 @@ using PhonePlus.Interface.DTO.Credits;
 
 namespace PhonePlus.Application.UseCases.Credits;
 
-public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository, IUserRepository userRepository) : IRequestHandler<GetCreditsByUserIdInputPort>
+public class GetLatestCreditsUseCase(ICreditRepository creditRepository, IUserRepository userRepository) : IRequestHandler<GetLatestCreditsInputPort>
 {
-    public async Task Handle(GetCreditsByUserIdInputPort request, CancellationToken cancellationToken)
+    public async Task Handle(GetLatestCreditsInputPort request, CancellationToken cancellationToken)
     {
-        var credits = await creditRepository.GetCreditsByUserIdAsync(request.RequestData);
-        var userIds = credits.Select(credit => credit.UserId).Distinct().ToList();
+        var credits = await creditRepository.GetAvailableCredits();
+        var enumerable = credits as Credit[] ?? credits.ToArray();
+        var userIds = enumerable.Select(credit => credit.UserId).Distinct().ToList();
         var users = new List<User>();
         foreach (var userId in userIds)
         {
@@ -22,7 +23,7 @@ public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository
             }
         }
 
-        var creditResponse = credits.Select(credit =>
+        var creditsResponse = enumerable.Select(credit =>
         {
             var clientName = users.FirstOrDefault(u => u.Id == credit.UserId)?.Name;
             var username = users.FirstOrDefault(u => u.Id == credit.UserId)?.Username;
@@ -43,6 +44,6 @@ public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository
                 credit.StateId
             );
         }).ToList();
-        request.OutputPort.Handle(creditResponse);
+        request.OutputPort.Handle(creditsResponse);
     }
 }

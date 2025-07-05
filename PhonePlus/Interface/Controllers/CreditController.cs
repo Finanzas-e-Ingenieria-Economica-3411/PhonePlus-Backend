@@ -20,7 +20,7 @@ namespace PhonePlus.Interface.Controllers;
 public class CreditController(IMediator mediator) : ControllerBase
 {
     [ProducesResponseType(200)]
-    [HttpGet("get-by-user-id")]
+    [HttpGet("user")]
     [RoleAuthorize("Seller","Administrator")]
     public async Task<IActionResult> GetByUserId([FromQuery] int userId)
     {
@@ -31,13 +31,15 @@ public class CreditController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
     
+ 
+    
     [ProducesResponseType(200)]
-    [HttpGet("get-by-state-id")]
-    [RoleAuthorize("Buyer", "Seller","Administrator")]
-    public async Task<IActionResult> GetByStateId([FromQuery] int stateId)
+    [HttpGet]
+    [RoleAuthorize("Buyer", "Administrator")]
+    public async Task<IActionResult> GetCredits()
     {
-        var outputPort = new GetCreditsByStateIdOutputPort();
-        var inputPort = new GetCreditsByStateIdInputPort(stateId, outputPort);
+        var outputPort = new GetLatestCreditsOutputPort();
+        var inputPort = new GetLatestCreditsInputPort(outputPort);
         await mediator.Send(inputPort);
         var response = outputPort.Data;
         return Ok(response);
@@ -56,7 +58,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     }
     
     [ProducesResponseType(200)]
-    [HttpPatch("update-status")]
+    [HttpPatch("update")]
     [RoleAuthorize("Administrator")]
     public async Task<IActionResult> UpdateCreditStatus([FromBody] UpdateCreditStateDto updateCreditStatusDto)
     {

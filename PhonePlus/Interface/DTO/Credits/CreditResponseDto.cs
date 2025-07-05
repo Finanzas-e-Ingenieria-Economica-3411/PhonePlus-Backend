@@ -12,6 +12,7 @@ public record CreditResponseDto(
     int Paid,
     int Interest,
     int PendingPayment,
-    int UserId,
+    string ClientName,
+    string Username,
     int StateId
     );
