@@ -78,6 +78,8 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
         var totalPeriods = credit.NumberOfYears * periodsPerYear;
         var initialFlow = CalculateInitialFlow(credit);
         paymentPlan.Add(initialFlow);
+
+        // Calcular tasa efectiva del periodo de pago del bono (TES)
         var tesRate = ConvertCuponToEffectivePerPeriod(
             credit.CuponRate,
             credit.CuponRateType,
@@ -86,39 +88,39 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
             credit.Frequencies,
             credit.DayPerYear
         );
-        
-        // El cupón siempre se calcula sobre el valor nominal, sin ajuste
-        var couponPayment = credit.NominalValue * tesRate;
-        // Crear un diccionario para acceso rápido a los períodos de gracia
+
         var graceDict = credit.GracePeriods.ToDictionary(g => g.Period, g => g.Type);
+        decimal nominal = credit.NominalValue;
+
+        // Capitalizar nominal en cada periodo de gracia total
         for (int i = 1; i < totalPeriods; i++)
         {
             if (graceDict.TryGetValue(i, out var graceType))
             {
                 if (graceType == GraceType.Total)
                 {
+                    nominal *= (1 + tesRate); // Capitaliza intereses al nominal
                     paymentPlan.Add(0);
                 }
                 else if (graceType == GraceType.Parcial)
                 {
-                    paymentPlan.Add(couponPayment);
+                    paymentPlan.Add(nominal * tesRate);
                 }
                 else // Ninguno
                 {
-                    paymentPlan.Add(couponPayment);
+                    paymentPlan.Add(nominal * tesRate);
                 }
             }
             else
             {
-                paymentPlan.Add(couponPayment);
+                paymentPlan.Add(nominal * tesRate);
             }
         }
-        var finalPayment = credit.NominalValue * tesRate;
-        if (credit.PrimRate.HasValue)
-        {
-            finalPayment += credit.NominalValue * (credit.PrimRate.Value / 100);
-        }
-        finalPayment += credit.NominalValue;
+
+        // Pago final: intereses + prima + devolución del nominal (capitalizado si hubo gracia total)
+        decimal finalInterest = nominal * tesRate;
+        decimal finalPrima = credit.PrimRate.HasValue ? nominal * (credit.PrimRate.Value / 100) : 0;
+        decimal finalPayment = finalInterest + finalPrima + nominal;
         paymentPlan.Add(finalPayment);
 
         return paymentPlan;
