@@ -39,11 +39,7 @@ public sealed class CreditConfiguration : IEntityTypeConfiguration<Credit>
             .IsRequired();
         builder.Property(c => c.DayPerYear)
             .IsRequired();
-        builder.Property(c => c.InterestRates)
-            .IsRequired();
         builder.Property(c => c.CapitalizationTypes)
-            .IsRequired();
-        builder.Property(c => c.InterestRate)
             .IsRequired();
         builder.Property(c => c.YearDiscount)
             .IsRequired();
@@ -53,11 +49,18 @@ public sealed class CreditConfiguration : IEntityTypeConfiguration<Credit>
             .IsRequired();
         builder.Property(c => c.Currency)
             .IsRequired();
-        
         builder.Property(c => c.CuponRate)
             .IsRequired();
-
+        builder.Property(c => c.CuponRateType)
+            .IsRequired();
+        builder.Property(c => c.CuponRateFrequency)
+            .IsRequired();
+        builder.Property(c => c.CuponRateCapitalization)
+            .IsRequired(false);
         builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
-        
+        builder.HasMany(c => c.GracePeriods)
+            .WithOne(g => g.Credit)
+            .HasForeignKey(g => g.CreditId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

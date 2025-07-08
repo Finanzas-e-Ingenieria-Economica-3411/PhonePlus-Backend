@@ -71,15 +71,26 @@ public class CreditController(IMediator mediator) : ControllerBase
     }
     
     [ProducesResponseType(200)]
-    [HttpGet("payment-plan")]
+    [HttpPost("payment-plan")]
     [RoleAuthorize("Emisor", "Inversionista")]
-    public async Task<IActionResult> GetPaymentPlan([FromQuery] int creditId)
+    public async Task<IActionResult> GetPaymentPlan([FromBody] PaymentPlanRequestDto requestDto)
     {
         var outputPort = new RequestPaymentPlanOutputPort();
-        var inputPort = new RequestPaymentPlanInputPort(creditId, outputPort);
+        var inputPort = new RequestPaymentPlanInputPort(requestDto, outputPort);
         await mediator.Send(inputPort);
         var response = outputPort.Data;
         return Ok(response);
     }
     
+    [ProducesResponseType(200)]
+    [HttpPatch("edit")]
+    [RoleAuthorize("Emisor")]
+    public async Task<IActionResult> EditCredit([FromBody] UpdateCreditRequestDto updateCreditDto)
+    {
+        var outputPort = new CreateOrUpdateCreditOutputPort();
+        var inputPort = new UpdateCreditInputPort(updateCreditDto, outputPort);
+        await mediator.Send(inputPort);
+        var response = outputPort.Data;
+        return Ok(response);
+    }
 }

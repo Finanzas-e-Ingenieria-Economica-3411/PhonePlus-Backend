@@ -3,8 +3,8 @@ using PhonePlus.Domain.Enums;
 namespace PhonePlus.Interface.DTO.Credits;
 
 
-
-public record CreateCreditRequestDto(
+public record UpdateCreditRequestDto(
+    int Id,
     decimal ComercialValue,
     decimal NominalValue,
     decimal? StructurationRate,

@@ -1,4 +1,5 @@
 using PhonePlus.Domain.Enums;
+using System.Collections.Generic;
 
 namespace PhonePlus.Interface.DTO.Credits;
 
@@ -15,14 +16,16 @@ public record CreditResponseDto(
     States State,
     Frequencies Frequencies,
     int DayPerYear,
-    InterestRates InterestRates,
     CapitalizationTypes CapitalizationTypes,
-    decimal InterestRate,
     decimal YearDiscount,
     decimal RentImport,
     int UserId,
     decimal CuponRate,
+    InterestRates CuponRateType,
+    Frequencies CuponRateFrequency,
+    CapitalizationTypes? CuponRateCapitalization,
     CurrencyTypes Currency,
     string ClientName,
-    string Username
+    string Username,
+    List<GracePeriodDto> GracePeriods
     );

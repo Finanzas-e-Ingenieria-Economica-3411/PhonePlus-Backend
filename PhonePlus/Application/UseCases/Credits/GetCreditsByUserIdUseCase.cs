@@ -39,16 +39,18 @@ public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository
                 credit.State,
                 credit.Frequencies,
                 credit.DayPerYear,
-                credit.InterestRates,
                 credit.CapitalizationTypes,
-                credit.InterestRate,
                 credit.YearDiscount,
                 credit.RentImport,
                 credit.UserId,
                 credit.CuponRate,
+                credit.CuponRateType,
+                credit.CuponRateFrequency,
+                credit.CuponRateCapitalization,
                 credit.Currency,
                 clientName ?? string.Empty,
-                username ?? string.Empty
+                username ?? string.Empty,
+                credit.GracePeriods.Select(gp => new GracePeriodDto(gp.Period, gp.Type)).ToList()
             );
         }).ToList();
         request.OutputPort.Handle(creditResponse);
