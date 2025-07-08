@@ -19,5 +19,6 @@ public record CreateCreditRequestDto(
     decimal YearDiscount,
     decimal RentImport,
     int UserId,
+    decimal CuponRate,
     CurrencyTypes Currency
 );

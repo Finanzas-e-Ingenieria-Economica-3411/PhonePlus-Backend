@@ -21,6 +21,7 @@ public record CreditResponseDto(
     decimal YearDiscount,
     decimal RentImport,
     int UserId,
+    decimal CuponRate,
     CurrencyTypes Currency,
     string ClientName,
     string Username

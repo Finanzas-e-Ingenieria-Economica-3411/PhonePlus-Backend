@@ -9,112 +9,143 @@ namespace PhonePlus.Application.UseCases.Credits;
 public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository) : IRequestHandler<RequestPaymentPlanInputPort>
 {
     public async Task Handle(RequestPaymentPlanInputPort request, CancellationToken cancellationToken)
-{
-    try
     {
-        var credit = await creditRepository.GetCreditByIdAsync(request.RequestData);
-        if (credit == null)
+        try
         {
-            throw new Exception("Credit not found.");
-        }
-
-        var rate = CalculateCuponRate(credit.InterestRate, credit);
-
-        var paymentPlan = new List<decimal>();
-        var time = CalculateTimePerCapitalization(credit.CapitalizationTypes, credit.Frequencies);
-        var totalPeriods = credit.NumberOfYears *
-            (time);
-        if (credit is { StructurationRate: not null, CavaliRate: not null })
-        {
-            if (credit is { FlotationRate: not null, ColonRate: not null })
+            var credit = await creditRepository.GetCreditByIdAsync(request.RequestData);
+            if (credit == null)
             {
-                decimal flow0 = (-1 * credit.ComercialValue) * (1 + (credit.FlotationRate.Value / 100) + (credit.CavaliRate.Value / 100));
-                paymentPlan.Add(flow0);
+                throw new Exception("Credit not found.");
             }
-        }
 
+            var paymentPlan = CalculateAmericanMethodPaymentPlan(credit);
+            request.OutputPort.Handle(paymentPlan);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error calculating payment plan: {ex.Message}");
+        }
+    }
+
+    private List<decimal> CalculateAmericanMethodPaymentPlan(Credit credit)
+    {
+        var paymentPlan = new List<decimal>();
+        var periodsPerYear = CalculatePeriodsPerYear(credit.Frequencies);
+        var totalPeriods = credit.NumberOfYears * periodsPerYear;
+        var initialFlow = CalculateInitialFlow(credit);
+        paymentPlan.Add(initialFlow);
+        var couponPayment = CalculateCouponPayment(credit);
         for (int i = 1; i < totalPeriods; i++)
         {
-            var flow = credit.NominalValue * rate;
-            paymentPlan.Add(flow);
+            paymentPlan.Add(couponPayment);
         }
-        
-        if (credit.PrimRate != null)
+        var finalPayment = CalculateFinalPayment(credit, couponPayment);
+        paymentPlan.Add(finalPayment);
+
+        return paymentPlan;
+    }
+
+    private decimal CalculateInitialFlow(Credit credit)
+    {
+        var initialFlow = -credit.ComercialValue;
+        if (credit.FlotationRate.HasValue)
         {
-            var lastFlow = credit.NominalValue * (rate + (credit.PrimRate.Value / 100)) + credit.NominalValue;
-            paymentPlan.Add(lastFlow);
+            initialFlow -= credit.ComercialValue * (credit.FlotationRate.Value / 100);
         }
-        
-        request.OutputPort.Handle(paymentPlan);
-    }
-    catch (Exception ex)
-    {
-        throw new Exception(ex.Message);
-    }
-}
-
-    private decimal CalculateCuponRate(decimal interest, Credit credit)
-    {
-        if (credit.CapitalizationTypes == CapitalizationTypes.Annual)
+        if (credit.CavaliRate.HasValue)
         {
-            return interest / 100;
+            initialFlow -= credit.ComercialValue * (credit.CavaliRate.Value / 100);
         }
-        var days = CalculateDaysPerYear(credit.Frequencies);
-        
-        var rate = Math.Pow((double)(1 + (interest / 100)), (double)days / 360) - 1;
 
-        Console.WriteLine($"Calculated rate: {rate}");
-        return (decimal)rate;
+        return initialFlow;
     }
 
-
-
-private int CalculateTimePerCapitalization(CapitalizationTypes capitalizationTypes, Frequencies frequencies)
-{
-    return capitalizationTypes switch
+    private decimal CalculateCouponPayment(Credit credit)
     {
-        CapitalizationTypes.Cuatrimester => 4,
-        CapitalizationTypes.Semester => 2,
-        CapitalizationTypes.Annual => 1,
-        CapitalizationTypes.Bimonthly => 6,
-        CapitalizationTypes.Monthly => CalculateMonthsPerYear(frequencies),
-        CapitalizationTypes.Weekly => 52, 
-        CapitalizationTypes.Daily =>  CalculateDaysPerYear(frequencies),
-        _ => throw new ArgumentOutOfRangeException(nameof(capitalizationTypes), "Invalid capitalization type.")
-    };
-}
-
-
-
-private int CalculateMonthsPerYear(Frequencies frequency)
-{
-    return frequency switch
+        var tesRate = ConvertTeaToTes(credit);
+        
+        return credit.NominalValue * tesRate;
+    }
+    
+    private decimal ConvertTeaToTes(Credit credit)
     {
-        Frequencies.Bimester => 6,
-        Frequencies.Trimestre => 4,
-        Frequencies.Year => 1,
-        Frequencies.FifteenDays => 24,
-        Frequencies.Monthly => 12,
-        Frequencies.Quarterly => 4,
-        Frequencies.Semestral => 2,
-        _ => throw new ArgumentOutOfRangeException(nameof(frequency), "Invalid frequency type.")
-    };
-}
-
-private int CalculateDaysPerYear(Frequencies frequency)
-{
-    return frequency switch
+        var tea = credit.CuponRate / 100; 
+        var daysInPeriod = CalculateDaysInPeriod(credit.Frequencies, credit.DayPerYear);
+        var daysInYear = credit.DayPerYear;
+        
+        var tes = Math.Pow(1 + (double)tea, (double)daysInPeriod / (double)daysInYear) - 1;
+        return (decimal)tes;
+    }
+    
+    private int CalculateDaysInPeriod(Frequencies frequency, int dayPerYear)
     {
-        Frequencies.Bimester => 60,
-        Frequencies.Trimestre => 90,
-        Frequencies.Year => 360,
-        Frequencies.FifteenDays => 360,
-        Frequencies.Monthly => 30,
-        Frequencies.Quarterly => 90,
-        Frequencies.Semestral => 180,
-        _ => throw new ArgumentOutOfRangeException(nameof(frequency), "Invalid frequency type.")
-    };
-}
+        return frequency switch
+        {
+            Frequencies.Monthly => 30,
+            Frequencies.Bimester => 60,
+            Frequencies.Trimestre => 90,
+            Frequencies.Quarterly => 90,
+            Frequencies.Semestral => 180,
+            Frequencies.Year => dayPerYear,
+            Frequencies.FifteenDays => 15,
+            _ => throw new ArgumentOutOfRangeException(nameof(frequency), "Invalid frequency type.")
+        };
+    }
 
+    private decimal CalculateFinalPayment(Credit credit, decimal couponPayment)
+    {
+        
+        var finalPayment = couponPayment + credit.NominalValue;
+        if (credit.PrimRate.HasValue)
+        {
+            finalPayment += credit.NominalValue * (credit.PrimRate.Value / 100);
+        }
 
+        return finalPayment;
+    }
+
+    private int CalculatePeriodsPerYear(Frequencies frequency)
+    {
+        return frequency switch
+        {
+            Frequencies.Monthly => 12,
+            Frequencies.Bimester => 6,
+            Frequencies.Trimestre => 4,
+            Frequencies.Quarterly => 4,
+            Frequencies.Semestral => 2,
+            Frequencies.Year => 1,
+            Frequencies.FifteenDays => 24,
+            _ => throw new ArgumentOutOfRangeException(nameof(frequency), "Invalid frequency type.")
+        };
+    }
+    
+    private decimal ConvertNominalToEffective(Credit credit)
+    {
+        var capitalizationPeriodsPerYear = CalculateCapitalizationPeriodsPerYear(credit.CapitalizationTypes);
+        var nominalRate = credit.InterestRate / 100;
+        
+        var effectiveRate = Math.Pow(1 + (double)(nominalRate / capitalizationPeriodsPerYear), (double)capitalizationPeriodsPerYear) - 1;
+        return (decimal)effectiveRate;
+    }
+
+    private int CalculateCapitalizationPeriodsPerYear(CapitalizationTypes capitalizationType)
+    {
+        return capitalizationType switch
+        {
+            CapitalizationTypes.Daily => 360,
+            CapitalizationTypes.Weekly => 52,
+            CapitalizationTypes.Monthly => 12,
+            CapitalizationTypes.Bimonthly => 6,
+            CapitalizationTypes.Cuatrimester => 3,
+            CapitalizationTypes.Semester => 2,
+            CapitalizationTypes.Annual => 1,
+            _ => throw new ArgumentOutOfRangeException(nameof(capitalizationType), "Invalid capitalization type.")
+        };
+    }
+    
+    private decimal AdjustCouponRateToFrequency(Credit credit)
+    {
+        var periodsPerYear = CalculatePeriodsPerYear(credit.Frequencies);
+        return credit.CuponRate / periodsPerYear;
+    }
 }

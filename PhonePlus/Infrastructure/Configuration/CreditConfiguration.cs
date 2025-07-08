@@ -53,6 +53,9 @@ public sealed class CreditConfiguration : IEntityTypeConfiguration<Credit>
             .IsRequired();
         builder.Property(c => c.Currency)
             .IsRequired();
+        
+        builder.Property(c => c.CuponRate)
+            .IsRequired();
 
         builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
         

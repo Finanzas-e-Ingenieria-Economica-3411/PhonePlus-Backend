@@ -34,6 +34,8 @@ public sealed class Credit
     
     public int UserId { get; private set; }
     
+    public decimal CuponRate { get; private set; }
+    
     public CurrencyTypes Currency { get; private set; }
 
 
@@ -61,6 +63,7 @@ public sealed class Credit
         YearDiscount = request.YearDiscount;
         RentImport = request.RentImport;
         UserId = request.UserId;
+        CuponRate = request.CuponRate;
         Currency = request.Currency;
         EmitionDate = DateTime.Now;
     }

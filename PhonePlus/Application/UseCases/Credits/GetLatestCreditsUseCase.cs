@@ -46,6 +46,7 @@ public class GetLatestCreditsUseCase(ICreditRepository creditRepository, IUserRe
                 credit.YearDiscount,
                 credit.RentImport,
                 credit.UserId,
+                credit.CuponRate,
                 credit.Currency,
                 clientName ?? string.Empty,
                 username ?? string.Empty

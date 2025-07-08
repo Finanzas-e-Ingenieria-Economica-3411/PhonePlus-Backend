@@ -45,6 +45,7 @@ public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository
                 credit.YearDiscount,
                 credit.RentImport,
                 credit.UserId,
+                credit.CuponRate,
                 credit.Currency,
                 clientName ?? string.Empty,
                 username ?? string.Empty
