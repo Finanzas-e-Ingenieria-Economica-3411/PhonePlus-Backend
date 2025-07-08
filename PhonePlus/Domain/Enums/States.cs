@@ -4,10 +4,10 @@ namespace PhonePlus.Domain.Enums;
 
 public enum States
 {
-    [Description("Pending")]
-    Pending = 1,
-    [Description("Approve")]
-    Approve = 2,
-    [Description("Reject")]
-    Reject = 3
+    [Description("Registrado")]
+    Registered = 1,
+    [Description("Solicitado")]
+    Requested = 2,
+    [Description("Aprobado")]
+    Approved = 3,
 }

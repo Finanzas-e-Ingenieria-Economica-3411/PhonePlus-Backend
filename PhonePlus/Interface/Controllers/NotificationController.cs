@@ -17,8 +17,8 @@ namespace PhonePlus.Interface.Controllers;
 public class NotificationController(IMediator mediator) : ControllerBase
 {
     [ProducesResponseType(200)]
-    [RoleAuthorize("Buyer", "Seller","Admin")]
-    [HttpGet("get-by-user-id")]
+    [RoleAuthorize("Emisor", "Inversionista")]
+    [HttpGet]
     public async Task<IActionResult> GetByUserId([FromQuery] int userId)
     {
         var outputPort = new GetNotificationsByUserIdOutputPort();
@@ -29,7 +29,7 @@ public class NotificationController(IMediator mediator) : ControllerBase
     }
     
     [ProducesResponseType(200)]
-    [RoleAuthorize("Buyer", "Seller","Admin")]
+    [RoleAuthorize("Emisor", "Inversionista")]
     [HttpPost]
     public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationRequestDto createNotificationDto)
     {

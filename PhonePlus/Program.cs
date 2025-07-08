@@ -33,12 +33,6 @@ using (var scope = app.Services.CreateScope())
     var seedRolesDto = new SeedRolesDto();
     var outPutPort = new SeedRolesOutputPort();
     await seedRoleUseCase.Send(new SeedRolesInputPort(seedRolesDto,outPutPort ));
-    
-    var seedStateUseCase =  services.GetRequiredService<MediatR.IMediator>();
-    var seedStateDto = new SeedStatesDto();
-    var outPutPortState = new SeedStatesOutputPort();
-    await seedStateUseCase.Send(new SeedStatesInputPort(seedStateDto,outPutPortState ));
-    Console.WriteLine("Seeded Roles Status: " + outPutPort.Data);
 
 }
 

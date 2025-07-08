@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PhonePlus.Domain.Enums;
 using PhonePlus.Domain.Models;
 using PhonePlus.Domain.Repositories;
 using PhonePlus.Infrastructure.Context;
@@ -16,19 +17,19 @@ public sealed class CreditRepository(AppDbContext context) : BaseRepository<Cred
         return credits;
     }
 
-    public async Task<IEnumerable<Credit>> GetCreditsByStateId(int stateId)
+    public async Task<Credit?> GetCreditByIdAsync(int creditId)
     {
-        var credits = await context.Set<Credit>()
-            .Where(c => c.StateId == stateId)
-            .ToListAsync();
-        return credits;
+        var credit = await context.Set<Credit>()
+            .Where(c => c.Id == creditId).FirstOrDefaultAsync();
+        return credit;
     }
+
 
     public async Task<IEnumerable<Credit>> GetAvailableCredits()
     {
         
         var credits = await context.Set<Credit>()
-            .Where(c => c.StateId == 1 && c.StartDate.AddMonths(c.Months) > DateTime.Now)
+            .Where(c => c.State == States.Requested && c.EmitionDate.AddMonths(1) > DateTime.Now)
             .ToListAsync();
         return credits;
     }

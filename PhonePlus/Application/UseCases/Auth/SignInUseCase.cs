@@ -20,7 +20,7 @@ public sealed class SignInUseCase(IUserRepository userRepository, ITokenService 
                 throw new BadHttpRequestException("User with the provided email does not exist.");
             }
 
-            bool isPasswordValid = hasher.Verify(request.RequestData.Password, user.Password);
+            var isPasswordValid = hasher.Verify(request.RequestData.Password, user.Password);
             if (!isPasswordValid)
             {
                 throw new BadHttpRequestException("The provided password is incorrect.");

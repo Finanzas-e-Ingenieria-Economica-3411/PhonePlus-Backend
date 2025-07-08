@@ -1,3 +1,4 @@
+using PhonePlus.Domain.Enums;
 using PhonePlus.Interface.DTO.Credits;
 
 namespace PhonePlus.Domain.Models;
@@ -5,53 +6,69 @@ namespace PhonePlus.Domain.Models;
 public sealed class Credit
 {
     public int Id { get; private set; }
-    public int PhoneNumber { get; private set; }
-    public decimal Price { get; private set; }
-    public DateTime StartDate { get; private set; }
-    public int Months { get; private set; }
+    public decimal ComercialValue { get; private set; }
+    
+    public decimal NominalValue { get; private set; }
+
+    public int NumberOfYears { get; private set; }
+    
+    public States State { get; private set; }
+    
+    public Frequencies Frequencies { get; private set; }
+    
+    public int DayPerYear { get; private set; }
+    
+    public InterestRates InterestRates { get; private set; }
+    
+    public CapitalizationTypes CapitalizationTypes { get; private set; }
     public decimal InterestRate { get; private set; }
-    public int Insurance { get; private set; }
-    public int Amortization { get; private set; }
-    public int Paid { get; private set; }
-    public int Interest { get; private set; }
-    public int PendingPayment { get; private set; }
+    public decimal YearDiscount { get; private set; }
+    public decimal RentImport { get; private set; }
+    
+    public decimal? StructurationRate { get; private set; }
+    public decimal? ColonRate { get; private set; }
+    public decimal? FlotationRate { get; private set; }
+    public decimal? CavaliRate { get; private set; }
+    public decimal? PrimRate { get; private set; }
+    public DateTime EmitionDate { get; private set; }
+    
     public int UserId { get; private set; }
-    public int StateId { get; private set; }
+    
+    public CurrencyTypes Currency { get; private set; }
+
 
     public Credit()
     {
-        PhoneNumber = 0;
-        Price = 0;
-        StartDate = DateTime.MinValue;
-        Months = 0;
-        InterestRate = 0;
-        Insurance = 0;
-        Amortization = 0;
-        Paid = 0;
-        Interest = 0;
-        PendingPayment = 0;
-        UserId = 0;
-        StateId = 1;
+        EmitionDate = DateTime.Now;
     }
-    
-    public Credit(CreateCreditRequestDto dto)
+
+    public Credit(CreateCreditRequestDto request)
     {
-        PhoneNumber = dto.PhoneNumber;
-        Price = dto.Price;
-        StartDate = dto.StartDate;
-        Months = dto.Months;
-        InterestRate = dto.InterestRate;
-        Insurance = dto.Insurance;
-        Amortization = dto.Amortization;
-        Paid = dto.Paid;
-        Interest = dto.Interest;
-        PendingPayment = dto.PendingPayment;
-        UserId = dto.UserId;
-        StateId = 1;
+        ComercialValue = request.ComercialValue;
+        NominalValue = request.NominalValue;
+        StructurationRate = request.StructurationRate;
+        ColonRate = request.ColonRate;
+        FlotationRate = request.FlotationRate;
+        CavaliRate = request.CavaliRate;
+        PrimRate = request.PrimRate;
+        NumberOfYears = request.NumberOfYears;
+        State = States.Registered;
+        Frequencies = request.Frequencies;
+        DayPerYear = request.DayPerYear;
+        InterestRates = request.InterestRates;
+        CapitalizationTypes = request.CapitalizationTypes;
+        InterestRate = request.InterestRate;
+        YearDiscount = request.YearDiscount;
+        RentImport = request.RentImport;
+        UserId = request.UserId;
+        Currency = request.Currency;
+        EmitionDate = DateTime.Now;
     }
-    
-    public void UpdateState(int newStateId)
+
+    public void UpdateState(States state)
     {
-        StateId = newStateId;
+        State = state;
     }
+
+
 }

@@ -4,12 +4,8 @@ namespace PhonePlus.Domain.Enums;
 
 public enum RoleTypes
 {
-   [Description("Banned")]
-   Banned = 1,
-   [Description("Buyer")]
-   Buyer = 2,
-   [Description("Seller")]
-   Seller = 3,
-   [Description("Administrator")]
-   Admin = 4,
+   [Description("Emisor")]
+   Emisor = 1,
+   [Description("Inversionista")]
+   Inversor = 2,
 }

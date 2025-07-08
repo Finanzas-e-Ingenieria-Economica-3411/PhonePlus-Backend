@@ -46,7 +46,6 @@ public static class InfrastructureContainer
         services.AddScoped<ISmtpNotifier, SmtpNotifier>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<INotificationRepository, NotificationRepository>();
-        services.AddScoped<IStateRepository, StateRepository>();
         services.AddScoped<ICreditRepository, CreditRepository>();
         
 

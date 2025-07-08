@@ -1,18 +1,27 @@
+using PhonePlus.Domain.Enums;
+
 namespace PhonePlus.Interface.DTO.Credits;
 
 public record CreditResponseDto(
     int Id,
-    int PhoneNumber,
-    decimal Price,
-    DateTime StartDate,
-    int Months,
+    decimal ComercialValue,
+    decimal NominalValue,
+    decimal? StructurationRate,
+    decimal? ColonRate,
+    decimal? FlotationRate,
+    decimal? CavaliRate,
+    decimal? PrimRate,
+    int NumberOfYears,
+    States State,
+    Frequencies Frequencies,
+    int DayPerYear,
+    InterestRates InterestRates,
+    CapitalizationTypes CapitalizationTypes,
     decimal InterestRate,
-    int Insurance,
-    int Amortization,
-    int Paid,
-    int Interest,
-    int PendingPayment,
+    decimal YearDiscount,
+    decimal RentImport,
+    int UserId,
+    CurrencyTypes Currency,
     string ClientName,
-    string Username,
-    int StateId
+    string Username
     );

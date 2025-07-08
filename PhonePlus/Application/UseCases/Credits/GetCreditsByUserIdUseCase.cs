@@ -28,19 +28,26 @@ public sealed class GetCreditsByUserIdUseCase(ICreditRepository creditRepository
             var username = users.FirstOrDefault(u => u.Id == credit.UserId)?.Username;
             return new CreditResponseDto(
                 credit.Id,
-                credit.PhoneNumber,
-                credit.Price,
-                credit.StartDate,
-                credit.Months,
+                credit.ComercialValue,
+                credit.NominalValue,
+                credit.StructurationRate,
+                credit.ColonRate,
+                credit.FlotationRate,
+                credit.CavaliRate,
+                credit.PrimRate,
+                credit.NumberOfYears,
+                credit.State,
+                credit.Frequencies,
+                credit.DayPerYear,
+                credit.InterestRates,
+                credit.CapitalizationTypes,
                 credit.InterestRate,
-                credit.Insurance,
-                credit.Amortization,
-                credit.Paid,
-                credit.Interest,
-                credit.PendingPayment,
-                clientName,
-                username,
-                credit.StateId
+                credit.YearDiscount,
+                credit.RentImport,
+                credit.UserId,
+                credit.Currency,
+                clientName ?? string.Empty,
+                username ?? string.Empty
             );
         }).ToList();
         request.OutputPort.Handle(creditResponse);

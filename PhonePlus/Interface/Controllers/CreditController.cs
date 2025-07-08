@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhonePlus.Application.Ports.Credits;
 using PhonePlus.Application.Ports.Credits.Input;
@@ -21,7 +22,7 @@ public class CreditController(IMediator mediator) : ControllerBase
 {
     [ProducesResponseType(200)]
     [HttpGet("user")]
-    [RoleAuthorize("Seller","Administrator")]
+    [RoleAuthorize("Emisor")]
     public async Task<IActionResult> GetByUserId([FromQuery] int userId)
     {
         var outputPort = new GetCreditsByUserIdOutputPort();
@@ -35,7 +36,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(200)]
     [HttpGet]
-    [RoleAuthorize("Buyer", "Administrator")]
+    [RoleAuthorize("Inversionista")]
     public async Task<IActionResult> GetCredits()
     {
         var outputPort = new GetLatestCreditsOutputPort();
@@ -47,7 +48,7 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(201)]
     [HttpPost]
-    [RoleAuthorize("Seller","Administrator")]
+    [RoleAuthorize("Emisor")]
     public async Task<IActionResult> CreateCredit([FromBody] CreateCreditRequestDto createCreditDto)
     {
         var outputPort = new CreateOrUpdateCreditOutputPort();
@@ -59,11 +60,23 @@ public class CreditController(IMediator mediator) : ControllerBase
     
     [ProducesResponseType(200)]
     [HttpPatch("update")]
-    [RoleAuthorize("Administrator")]
+    [RoleAuthorize("Emisor")]
     public async Task<IActionResult> UpdateCreditStatus([FromBody] UpdateCreditStateDto updateCreditStatusDto)
     {
         var outputPort = new CreateOrUpdateCreditOutputPort();
         var inputPort = new UpdateCreditStateInputPort(updateCreditStatusDto, outputPort);
+        await mediator.Send(inputPort);
+        var response = outputPort.Data;
+        return Ok(response);
+    }
+    
+    [ProducesResponseType(200)]
+    [HttpGet("payment-plan")]
+    [RoleAuthorize("Emisor", "Inversionista")]
+    public async Task<IActionResult> GetPaymentPlan([FromQuery] int creditId)
+    {
+        var outputPort = new RequestPaymentPlanOutputPort();
+        var inputPort = new RequestPaymentPlanInputPort(creditId, outputPort);
         await mediator.Send(inputPort);
         var response = outputPort.Data;
         return Ok(response);

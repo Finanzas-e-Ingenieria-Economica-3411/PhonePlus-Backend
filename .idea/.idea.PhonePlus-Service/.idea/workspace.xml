@@ -9,11 +9,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb83b272-9545-464e-8ef1-b4bd588099de" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Application/Ports/Credits/Input/RequestPaymentPlanInputPort.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Application/Ports/Credits/Output/RequestPaymentPlanOutputPort.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/RequestPaymentPlanUseCase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/CapitalizationTypes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/CurrencyTypes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/Frequencies.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/InterestRates.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PhonePlus-Service/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PhonePlus-Service/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/Ports/Credits/Input/SeedStatesInputPort.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/Ports/Credits/Output/SeedStatesOutputPort.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Auth/SignInUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Auth/SignInUseCase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/GetCreditsByStateIdUseCase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/GetCreditsByUserIdUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/GetCreditsByUserIdUseCase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/GetLatestCreditsUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/GetLatestCreditsUseCase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/SeedStatesUseCase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/UpdateCreditStatusUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Application/UseCases/Credits/UpdateCreditStatusUseCase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Enums/RoleTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/RoleTypes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Enums/States.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Domain/Enums/States.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Models/Credit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Domain/Models/Credit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Models/State.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Repositories/ICreditRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Domain/Repositories/ICreditRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Domain/Repositories/IStateRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/IOC/InfrastructureContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/IOC/InfrastructureContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Infrastructure/Configuration/CreditConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Infrastructure/Configuration/CreditConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Infrastructure/Configuration/StateConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Infrastructure/Context/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Infrastructure/Context/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Infrastructure/Repositories/Credits/CreditRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Infrastructure/Repositories/Credits/CreditRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Infrastructure/Repositories/Credits/StateRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/CreditController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/CreditController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/NotificationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/Controllers/NotificationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Credits/CreateCreditRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Credits/CreateCreditRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Credits/CreditResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Credits/CreditResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Credits/UpdateCreditStateDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Interface/DTO/Credits/UpdateCreditStateDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.dll" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/bin/Debug/net8.0/PhonePlus.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.csproj.CoreCompileInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.dll" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/PhonePlus/obj/Debug/net8.0/PhonePlus.sourcelink.json" afterDir="false" />
@@ -55,20 +89,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.PhonePlus: http.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.PhonePlus: http.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "HotReloadSettingsPage",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.PhonePlus: http">
     <configuration name="PhonePlus: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PhonePlus/PhonePlus.csproj" />
@@ -116,6 +151,8 @@
       <workItem from="1751123065276" duration="2976000" />
       <workItem from="1751403878891" duration="4163000" />
       <workItem from="1751490337624" duration="1821000" />
+      <workItem from="1751670936478" duration="6258000" />
+      <workItem from="1751909327348" duration="14925000" />
     </task>
     <task id="LOCAL-00001" summary="fix: changed roles authorize">
       <option name="closed" value="true" />
