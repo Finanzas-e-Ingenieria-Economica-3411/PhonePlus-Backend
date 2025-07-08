@@ -8,4 +8,6 @@ public enum InterestRates
     Effective = 1,
     [Description("Tasa Nominal")]
     Nominal = 2,
+    [Description("Tasa de Descuento")]
+    Discount = 3,
 }

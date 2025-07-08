@@ -46,6 +46,14 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
         int daysCok = CalculateDaysInPeriod(cokFreq, dayPerYear);
         int daysBond = CalculateDaysInPeriod(bondFreq, dayPerYear);
         double rate = (double)value / 100.0; // Asegura que la tasa esté en decimal
+        if (type == InterestRates.Discount)
+        {
+            // Conversión de tasa de descuento a tasa efectiva equivalente
+            rate = rate / (1 - rate);
+            // Ahora se trata como tasa efectiva
+            double effCok = Math.Pow(1 + rate, (double)daysBond / daysCok) - 1;
+            return (decimal)effCok;
+        }
         if (type == InterestRates.Effective)
         {
             double effCok = Math.Pow(1 + rate, (double)daysBond / daysCok) - 1;
@@ -78,13 +86,9 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
             credit.Frequencies,
             credit.DayPerYear
         );
-        //TODO: corregir el cálculo de conversión de tasas, agregar tasa de descuento y conversión de tasas a efectivo por periodo de pago del bono
         
-        // Detectar si se debe usar nominal ajustado
-        bool usarNominalAjustado = credit.CuponRateType == InterestRates.Nominal &&
-            (credit.CuponRateCapitalization != null && CalculatePeriodsPerYear(credit.Frequencies) != CalculateCapitalizationPeriodsPerYear(credit.CuponRateCapitalization.Value));
-        decimal baseNominal = usarNominalAjustado ? credit.NominalValue * (1 + tesRate) : credit.NominalValue;
-        var couponPayment = baseNominal * tesRate;
+        // El cupón siempre se calcula sobre el valor nominal, sin ajuste
+        var couponPayment = credit.NominalValue * tesRate;
         // Crear un diccionario para acceso rápido a los períodos de gracia
         var graceDict = credit.GracePeriods.ToDictionary(g => g.Period, g => g.Type);
         for (int i = 1; i < totalPeriods; i++)
@@ -109,12 +113,12 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
                 paymentPlan.Add(couponPayment);
             }
         }
-        var finalPayment = baseNominal * tesRate;
+        var finalPayment = credit.NominalValue * tesRate;
         if (credit.PrimRate.HasValue)
         {
-            finalPayment += baseNominal * (credit.PrimRate.Value / 100);
+            finalPayment += credit.NominalValue * (credit.PrimRate.Value / 100);
         }
-        finalPayment += baseNominal;
+        finalPayment += credit.NominalValue;
         paymentPlan.Add(finalPayment);
 
         return paymentPlan;
@@ -145,10 +149,8 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
             credit.Frequencies,
             credit.DayPerYear
         );
-        bool usarNominalAjustado = credit.CuponRateType == InterestRates.Nominal &&
-            (credit.CuponRateCapitalization != null && CalculatePeriodsPerYear(credit.Frequencies) != CalculateCapitalizationPeriodsPerYear(credit.CuponRateCapitalization.Value));
-        decimal baseNominal = usarNominalAjustado ? credit.NominalValue * (1 + tesRate) : credit.NominalValue;
-        return baseNominal * tesRate;
+        // El cupón siempre se calcula sobre el valor nominal, sin ajuste
+        return credit.NominalValue * tesRate;
     }
 
     // Conversión de tasa cupón a efectiva del periodo de pago del bono
@@ -157,6 +159,13 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
         int daysCupon = CalculateDaysInPeriod(cuponFreq, dayPerYear);
         int daysBond = CalculateDaysInPeriod(bondFreq, dayPerYear);
         double rate = (double)value / 100.0; // Asegura que la tasa esté en decimal
+        if (type == InterestRates.Discount)
+        {
+            // Conversión de tasa de descuento a tasa efectiva equivalente
+            rate = rate / (1 - rate);
+            double effCupon = Math.Pow(1 + rate, (double)daysBond / daysCupon) - 1;
+            return (decimal)effCupon;
+        }
         if (type == InterestRates.Effective)
         {
             double effCupon = Math.Pow(1 + rate, (double)daysBond / daysCupon) - 1;
@@ -199,15 +208,13 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
             credit.Frequencies,
             credit.DayPerYear
         );
-        bool usarNominalAjustado = credit.CuponRateType == InterestRates.Nominal &&
-            (credit.CuponRateCapitalization != null && CalculatePeriodsPerYear(credit.Frequencies) != CalculateCapitalizationPeriodsPerYear(credit.CuponRateCapitalization.Value));
-        decimal baseNominal = usarNominalAjustado ? credit.NominalValue * (1 + tesRate) : credit.NominalValue;
-        var finalPayment = baseNominal * tesRate;
+        // El pago final siempre se calcula sobre el valor nominal, sin ajuste
+        var finalPayment = credit.NominalValue * tesRate;
         if (credit.PrimRate.HasValue)
         {
-            finalPayment += baseNominal * (credit.PrimRate.Value / 100);
+            finalPayment += credit.NominalValue * (credit.PrimRate.Value / 100);
         }
-        finalPayment += baseNominal;
+        finalPayment += credit.NominalValue;
         return finalPayment;
     }
 
