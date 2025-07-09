@@ -75,8 +75,14 @@ public class CreditController(IMediator mediator) : ControllerBase
     [RoleAuthorize("Emisor", "Inversionista")]
     public async Task<IActionResult> GetPaymentPlan([FromBody] PaymentPlanRequestDto requestDto)
     {
+        var role = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value;
+        bool onlyTcea = false;
+        if (role == "Emisor" && (requestDto.CokValue == 0 || requestDto.CokValue == null))
+        {
+            onlyTcea = true;
+        }
         var outputPort = new RequestPaymentPlanOutputPort();
-        var inputPort = new RequestPaymentPlanInputPort(requestDto, outputPort);
+        var inputPort = new RequestPaymentPlanInputPort(requestDto, outputPort, onlyTcea);
         await mediator.Send(inputPort);
         var response = outputPort.Data;
         return Ok(response);

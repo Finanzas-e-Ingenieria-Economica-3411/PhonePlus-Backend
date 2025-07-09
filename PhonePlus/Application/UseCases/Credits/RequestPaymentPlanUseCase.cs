@@ -20,6 +20,25 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
                 throw new Exception("Credit not found.");
             }
 
+            var paymentPlan = CalculateAmericanMethodPaymentPlan(credit);
+            if (request.OnlyTcea)
+            {
+                // Solo calcular TCEA y los indicadores que no requieren COK
+                decimal tcea = CalculateIRR(paymentPlan);
+                var indicators = new BondIndicatorsDto
+                {
+                    TCEA = tcea,
+                    TREA = 0, // No se calcula sin COK
+                    Duration = 0,
+                    ModifiedDuration = 0,
+                    Convexity = 0,
+                    MaxMarketPrice = 0,
+                    CashFlows = paymentPlan
+                };
+                request.OutputPort.Handle(indicators);
+                return;
+            }
+
             // Convertir el COK a tasa efectiva del periodo de pago del bono
             var cokEffective = ConvertCokToEffectivePerPeriod(
                 dto.CokValue,
@@ -30,9 +49,8 @@ public sealed class RequestPaymentPlanUseCase(ICreditRepository creditRepository
                 credit.DayPerYear
             );
 
-            var paymentPlan = CalculateAmericanMethodPaymentPlan(credit);
-            var indicators = CalculateIndicators(credit, paymentPlan, cokEffective);
-            request.OutputPort.Handle(indicators);
+            var indicatorsFull = CalculateIndicators(credit, paymentPlan, cokEffective);
+            request.OutputPort.Handle(indicatorsFull);
         }
         catch (Exception ex)
         {

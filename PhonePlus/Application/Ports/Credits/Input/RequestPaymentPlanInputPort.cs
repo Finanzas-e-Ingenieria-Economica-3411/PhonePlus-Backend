@@ -9,10 +9,12 @@ public class RequestPaymentPlanInputPort : IInputPort<PaymentPlanRequestDto, Bon
 {
     public PaymentPlanRequestDto RequestData { get; }
     public IOutputPort<BondIndicatorsDto> OutputPort { get; }
+    public bool OnlyTcea { get; }
 
-    public RequestPaymentPlanInputPort(PaymentPlanRequestDto requestData, IOutputPort<BondIndicatorsDto> outputPort)
+    public RequestPaymentPlanInputPort(PaymentPlanRequestDto requestData, IOutputPort<BondIndicatorsDto> outputPort, bool onlyTcea = false)
     {
         RequestData = requestData;
         OutputPort = outputPort;
+        OnlyTcea = onlyTcea;
     }
 }
