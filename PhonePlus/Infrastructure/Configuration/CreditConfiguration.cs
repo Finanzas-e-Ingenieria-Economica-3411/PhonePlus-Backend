@@ -41,10 +41,6 @@ public sealed class CreditConfiguration : IEntityTypeConfiguration<Credit>
             .IsRequired();
         builder.Property(c => c.CapitalizationTypes)
             .IsRequired();
-        builder.Property(c => c.YearDiscount)
-            .IsRequired();
-        builder.Property(c => c.RentImport)
-            .IsRequired();
         builder.Property(c => c.EmitionDate)
             .IsRequired();
         builder.Property(c => c.Currency)

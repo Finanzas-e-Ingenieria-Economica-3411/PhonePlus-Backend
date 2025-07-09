@@ -16,13 +16,11 @@ public record CreateCreditRequestDto(
     Frequencies Frequencies,
     int DayPerYear,
     CapitalizationTypes CapitalizationTypes,
-    decimal YearDiscount,
-    decimal RentImport,
-    int UserId,
     decimal CuponRate,
     InterestRates CuponRateType,
     Frequencies CuponRateFrequency,
     CapitalizationTypes? CuponRateCapitalization,
     CurrencyTypes Currency,
-    List<GracePeriodDto> GracePeriods
+    List<GracePeriodDto> GracePeriods,
+    int UserId
 );

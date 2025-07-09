@@ -27,9 +27,7 @@ public sealed class CreditRepository(AppDbContext context) : BaseRepository<Cred
 
     public async Task<IEnumerable<Credit>> GetAvailableCredits()
     {
-        
         var credits = await context.Set<Credit>()
-            .Where(c => c.State == States.Requested && c.EmitionDate.AddMonths(1) > DateTime.Now)
             .ToListAsync();
         return credits;
     }

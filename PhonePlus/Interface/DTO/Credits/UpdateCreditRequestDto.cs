@@ -16,8 +16,6 @@ public record UpdateCreditRequestDto(
     Frequencies Frequencies,
     int DayPerYear,
     CapitalizationTypes CapitalizationTypes,
-    decimal YearDiscount,
-    decimal RentImport,
     int UserId,
     decimal CuponRate,
     InterestRates CuponRateType,

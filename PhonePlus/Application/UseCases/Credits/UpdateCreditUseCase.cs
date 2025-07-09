@@ -37,8 +37,6 @@ public sealed class UpdateCreditUseCase(
             credit.GetType().GetProperty("Frequencies")?.SetValue(credit, dto.Frequencies);
             credit.GetType().GetProperty("DayPerYear")?.SetValue(credit, dto.DayPerYear);
             credit.GetType().GetProperty("CapitalizationTypes")?.SetValue(credit, dto.CapitalizationTypes);
-            credit.GetType().GetProperty("YearDiscount")?.SetValue(credit, dto.YearDiscount);
-            credit.GetType().GetProperty("RentImport")?.SetValue(credit, dto.RentImport);
             credit.GetType().GetProperty("UserId")?.SetValue(credit, dto.UserId);
             credit.GetType().GetProperty("CuponRate")?.SetValue(credit, dto.CuponRate);
             credit.GetType().GetProperty("CuponRateType")?.SetValue(credit, dto.CuponRateType);

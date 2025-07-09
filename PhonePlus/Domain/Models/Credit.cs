@@ -13,8 +13,6 @@ public sealed class Credit
     public Frequencies Frequencies { get; private set; }
     public int DayPerYear { get; private set; }
     public CapitalizationTypes CapitalizationTypes { get; private set; }
-    public decimal YearDiscount { get; private set; }
-    public decimal RentImport { get; private set; }
     public decimal? StructurationRate { get; private set; }
     public decimal? ColonRate { get; private set; }
     public decimal? FlotationRate { get; private set; }
@@ -48,8 +46,6 @@ public sealed class Credit
         Frequencies = request.Frequencies;
         DayPerYear = request.DayPerYear;
         CapitalizationTypes = request.CapitalizationTypes;
-        YearDiscount = request.YearDiscount;
-        RentImport = request.RentImport;
         UserId = request.UserId;
         CuponRate = request.CuponRate;
         CuponRateType = request.CuponRateType;
